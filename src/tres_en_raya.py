@@ -35,11 +35,12 @@ class JuegoTresEnRaya:
                 user_move = input(estilos.color.azul + '\nIngresa tu movimiento (1-9) [exit -> para salir]: ' + estilos.color.RESET)
             
             except KeyboardInterrupt:
-                print('\n¡Adiós!')
+                print() # Salto de línea
+                print(estilos.color.azul + '¡Adiós!' + estilos.color.RESET)
                 exit()
 
             if user_move == 'exit':
-                print('\n¡Adiós!')
+                print(estilos.color.azul + '\n¡Adiós!' + estilos.color.RESET)
                 exit()
 
             try:
