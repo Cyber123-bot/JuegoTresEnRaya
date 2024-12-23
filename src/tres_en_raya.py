@@ -1,40 +1,42 @@
 import random
+import estilos
 
 class JuegoTresEnRaya:
     def __init__(self):
         """Esta clase representa el juego de tres en raya."""
-        self.board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        self.__board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        # self.__board = [estilos.color.amarillo + str(i) + estilos.color.RESET for i in range(10)]
 
     def mostrarTablero(self):
         """Muestra el estado actual del tablero en la consola"""
-        print('+-------+-------+-------+', 
+        print(estilos.color.cian + '+-------+-------+-------+', 
               '|       |       |       |', 
-              f'|   {self.board[0]}   |   {self.board[1]}   |   {self.board[2]}   |', 
+              f'|   {self.__board[0]}   |   {self.__board[1]}   |   {self.__board[2]}   |', 
               '|       |       |       |', 
               '+-------+-------+-------+',
               '|       |       |       |',
-              f'|   {self.board[3]}   |   {self.board[4]}   |   {self.board[5]}   |',
+              f'|   {self.__board[3]}   |   {self.__board[4]}   |   {self.__board[5]}   |',
               '|       |       |       |',
               '+-------+-------+-------+',
               '|       |       |       |',
-              f'|   {self.board[6]}   |   {self.board[7]}   |   {self.board[8]}   |',
+              f'|   {self.__board[6]}   |   {self.__board[7]}   |   {self.__board[8]}   |',
               '|       |       |       |',
-              '+-------+-------+-------+', sep='\n')
+              '+-------+-------+-------+' + estilos.color.RESET, sep='\n')
 
     def introducirMovimiento(self):
         """ La función pregunta al usuario acerca de su movimiento y actualiza el tablero"""
 
         # Comprueba si hay ganador
         if self.comprobarVictoria('X'):
-            print('El ganador es la máquina.')
+            print(estilos.color.naranja + 'El ganador es la máquina.' + estilos.color.RESET)
             exit()
 
         elif self.comprobarVictoria('O'):
-            print('El ganador eres tú.')
+            print(estilos.color.verde + 'El ganador eres tú.' + estilos.color.RESET)
             exit()
 
         while True:
-            user_move = input('Ingresa tu movimiento (1-9) o "exit" para salir: ')
+            user_move = input(estilos.color.azul + 'Ingresa tu movimiento (1-9) o "exit" para salir: ' + estilos.color.RESET)
             if user_move == 'exit':
                 print('¡Adiós!')
                 exit()
@@ -42,15 +44,16 @@ class JuegoTresEnRaya:
             try:
                 user_move = int(user_move)
                 if user_move < 1 or user_move > 9:
-                    raise ValueError("Movimiento fuera de rango.")
+                    raise ValueError(estilos.color.rojo + "Movimiento fuera de rango." + estilos.color.RESET)
+            
             except ValueError:
-                print("Movimiento no válido. Debes ingresar un número entre 1 y 9.")
+                print(estilos.color.rojo + "Movimiento no válido. Debes ingresar un número entre 1 y 9." + estilos.color.RESET)
                 continue
 
-            if self.board[user_move - 1] in ['X', 'O']:
-                print('Cuadrado ocupado. Intenta de nuevo.')
+            if self.__board[user_move - 1] in ['X', 'O']:
+                print(estilos.color.naranja + 'Cuadrado ocupado. Intenta de nuevo.' + estilos.color.RESET)
             else:
-                self.board[user_move - 1] = 'O'
+                self.__board[user_move - 1] = estilos.color.naranja + 'O' + estilos.color.RESET
                 break
 
     def escribirMovimiento(self):
@@ -58,23 +61,23 @@ class JuegoTresEnRaya:
 
         while True:
             case = random.randint(1, 9) - 1  # Convertimos a índice de lista
-            if self.board[case] not in ['X', 'O']:
-                self.board[case] = 'X'
+            if self.__board[case] not in ['X', 'O']:
+                self.__board[case] = estilos.color.rojo + 'X' + estilos.color.RESET
                 break
 
         # Comprueba si hay ganador
         if self.comprobarVictoria('X'):
-            print('El ganador es la máquina.')
+            print(estilos.color.naranja + 'El ganador es la máquina.' + estilos.color.RESET)
             exit()
 
         elif self.comprobarVictoria('O'):
-            print('El ganador eres tú.')
+            print(estilos.color.verde + 'El ganador eres tú.' + estilos.color.RESET)
             exit()
 
     def comprobarTableroLleno(self):
         """La función examina el tablero y termina el juego si no hay cuadros vacíos."""
-        if all(spot in ['X', 'O'] for spot in self.board):
-            print('Empate.')
+        if all(spot in ['X', 'O'] for spot in self.__board):
+            print(estilos.color.naranja + 'Empate.' + estilos.color.RESET)
             exit()
 
     def comprobarVictoria(self, sign):
@@ -91,7 +94,7 @@ class JuegoTresEnRaya:
         )
 
         for combinacion in combinaciones_ganadoras:
-            if all(self.board[i] == sign for i in combinacion):
+            if all(self.__board[i] == sign for i in combinacion):
                 return True
         return False
 
