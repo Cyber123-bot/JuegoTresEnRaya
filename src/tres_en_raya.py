@@ -25,11 +25,11 @@ class JuegoTresEnRaya:
         """ La función pregunta al usuario acerca de su movimiento y actualiza el tablero"""
 
         # Comprueba si hay ganador
-        if self.victory_for('X'):
+        if self.comprobarVictoria('X'):
             print('El ganador es la máquina.')
             exit()
 
-        elif self.victory_for('O'):
+        elif self.comprobarVictoria('O'):
             print('El ganador eres tú.')
             exit()
 
@@ -63,11 +63,11 @@ class JuegoTresEnRaya:
                 break
 
         # Comprueba si hay ganador
-        if self.victory_for('X'):
+        if self.comprobarVictoria('X'):
             print('El ganador es la máquina.')
             exit()
 
-        elif self.victory_for('O'):
+        elif self.comprobarVictoria('O'):
             print('El ganador eres tú.')
             exit()
 
@@ -99,23 +99,23 @@ class JuegoTresEnRaya:
         """Inicia el juego y alterna los turnos entre el usuario y la máquina"""
         while True: 
             # Muestra el tablero
-            self.display_board()
+            self.mostrarTablero()
 
             # Pide al usuario su movimiento
-            self.enter_move()
+            self.introducirMovimiento()
 
             # Comprobar si el tablero está lleno
-            self.check_board_is_full()
+            self.comprobarTableroLleno()
 
             # Vuelve a mostrar el tablero
-            self.display_board()
+            self.mostrarTablero()
 
             # Hace el movimiento del robot
-            self.draw_move()
+            self.escribirMovimiento()
 
             # Comprobar si el tablero está lleno
-            self.check_board_is_full()
+            self.comprobarTableroLleno()
 
 # Crear una instancia del juego y comenzar
 juego = JuegoTresEnRaya()
-juego.iniciar_juego()
+juego.iniciarJuego()
