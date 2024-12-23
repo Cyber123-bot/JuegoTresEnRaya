@@ -10,7 +10,7 @@ class JuegoTresEnRaya:
         """Esta clase representa el juego de tres en raya."""
         self.__board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         self.sign_user = self.SIGN_USER
-        self.sign_maquina = self.SIGN_MAQUINA  # Corregido aquí
+        self.sign_maquina = self.SIGN_MAQUINA
 
     def mostrarTablero(self):
         """Muestra el estado actual del tablero en la consola"""
@@ -37,23 +37,28 @@ class JuegoTresEnRaya:
             except KeyboardInterrupt:
                 print() # Salto de línea
                 print(estilos.color.azul + '¡Adiós!' + estilos.color.RESET)
-                exit()
+                exit() # Sale del juego
 
             if user_move == 'exit':
                 print(estilos.color.azul + '\n¡Adiós!' + estilos.color.RESET)
-                exit()
+                exit() # Sale del juego
 
             try:
                 user_move = int(user_move)
                 if user_move < 1 or user_move > 9:
+                    # Lanzar una excepción si el movimiento está fuera de rango
                     raise ValueError(estilos.color.rojo + "\nMovimiento fuera de rango." + estilos.color.RESET)
             
             except ValueError:
+                # Capturar la excepción y mostrar un mensaje de error
                 print(estilos.color.rojo + "\nMovimiento no válido. Debes ingresar un número entre 1 y 9." + estilos.color.RESET)
                 continue
-
+            
+            # Comprobar si el cuadrado está ocupado
             if self.__board[user_move - 1] in [self.sign_maquina, self.sign_user]:
                 print(estilos.color.naranja + '\nCuadrado ocupado. Intenta de nuevo.' + estilos.color.RESET)
+
+            # Si el cuadrado está vacío, actualiza el tablero
             else:
                 self.__board[user_move - 1] = self.sign_user
                 break
@@ -61,17 +66,24 @@ class JuegoTresEnRaya:
     def escribirMovimientoMaquina(self):
         """La función dibuja el movimiento de la máquina y actualiza el tablero."""
         while True:
+
             case = random.randint(1, 9) - 1  # Convertimos a índice de lista
+
+            # Si el cuadrado está ocupado, la máquina lo intenta de nuevo
             if self.__board[case] not in [self.sign_maquina, self.sign_user]:
                 self.__board[case] = self.sign_maquina
                 break
 
     def comprobarTableroLleno(self):
         """La función examina el tablero y termina el juego si no hay cuadros vacíos."""
+        # Si todos los cuadros están ocupados, el juego termina en empate
         if all(spot in [self.sign_maquina, self.sign_user] for spot in self.__board):
             print(estilos.color.naranja + '\nEmpate.' + estilos.color.RESET)
             return True
-        return False
+        
+        # Si hay cuadros vacíos, el juego continúa
+        else:
+            return False
 
     def comprobarVictoria(self, sign):
         """La función analiza el estatus del tablero para verificar el ganador"""
@@ -86,14 +98,17 @@ class JuegoTresEnRaya:
             (2, 4, 6)   # Diagonal secundaria
         )
 
+        # Comprobar si hay una combinación ganadora
         for combinacion in combinaciones_ganadoras:
             if all(self.__board[i] == sign for i in combinacion):
                 return True
+            
+        # Si no hay combinaciones ganadoras, el juego continúa
         return False
     
     def mostrarCabecera(self):
         """Muestra el título del juego"""
-        print(estilos.color.purpura + '\n\t\tTRES EN RAYA' + estilos.color.RESET)
+        print(estilos.color.purpura + '\n\t\tTRES EN RAYA' + estilos.color.RESET) # Título del juego
 
     def iniciarJuego(self):
         """Inicia el juego y alterna los turnos entre el usuario y la máquina"""
@@ -139,6 +154,6 @@ class JuegoTresEnRaya:
 
             os.system("cls" if os.name == "nt" else "clear")
 
-# Crear una instancia del juego y comenzar
-juego = JuegoTresEnRaya()
-juego.iniciarJuego()
+if __name__ == "__main__":
+    juego = JuegoTresEnRaya()
+    juego.iniciarJuego()
