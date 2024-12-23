@@ -1,5 +1,6 @@
 import random
 import estilos
+import os
 
 class JuegoTresEnRaya:
     SIGN_USER = estilos.color.amarillo + 'O' + estilos.color.cian
@@ -13,25 +14,25 @@ class JuegoTresEnRaya:
 
     def mostrarTablero(self):
         """Muestra el estado actual del tablero en la consola"""
-        print(estilos.color.cian + '+-------+-------+-------+', 
-              '|       |       |       |', 
-              f'|   {self.__board[0]}   |   {self.__board[1]}   |   {self.__board[2]}   |', 
-              '|       |       |       |', 
-              '+-------+-------+-------+',
-              '|       |       |       |',
-              f'|   {self.__board[3]}   |   {self.__board[4]}   |   {self.__board[5]}   |',
-              '|       |       |       |',
-              '+-------+-------+-------+',
-              '|       |       |       |',
-              f'|   {self.__board[6]}   |   {self.__board[7]}   |   {self.__board[8]}   |',
-              '|       |       |       |',
-              '+-------+-------+-------+' + estilos.color.RESET, sep='\n')
+        print(estilos.color.cian + '\t+-------+-------+-------+', 
+              '\t|       |       |       |', 
+              f'\t|   {self.__board[0]}   |   {self.__board[1]}   |   {self.__board[2]}   |', 
+              '\t|       |       |       |', 
+              '\t+-------+-------+-------+',
+              '\t|       |       |       |',
+              f'\t|   {self.__board[3]}   |   {self.__board[4]}   |   {self.__board[5]}   |',
+              '\t|       |       |       |',
+              '\t+-------+-------+-------+',
+              '\t|       |       |       |',
+              f'\t|   {self.__board[6]}   |   {self.__board[7]}   |   {self.__board[8]}   |',
+              '\t|       |       |       |',
+              '\t+-------+-------+-------+' + estilos.color.RESET, sep='\n')
 
     def introducirEscribirMovimiento(self):
         """La función pregunta al usuario acerca de su movimiento y actualiza el tablero"""
         while True:
             try:
-                user_move = input(estilos.color.azul + '\nIngresa tu movimiento (1-9) o "exit" para salir: ' + estilos.color.RESET)
+                user_move = input(estilos.color.azul + '\nIngresa tu movimiento (1-9) [exit -> para salir]: ' + estilos.color.RESET)
             
             except KeyboardInterrupt:
                 print('\n¡Adiós!')
@@ -88,10 +89,21 @@ class JuegoTresEnRaya:
             if all(self.__board[i] == sign for i in combinacion):
                 return True
         return False
+    
+    def mostrarCabecera(self):
+        """Muestra el título del juego"""
+        print(estilos.color.purpura + '\n\t\tTRES EN RAYA' + estilos.color.RESET)
 
     def iniciarJuego(self):
         """Inicia el juego y alterna los turnos entre el usuario y la máquina"""
-        while True: 
+        # Limpiar la pantalla
+        os.system("cls" if os.name == "nt" else "clear")
+        
+        # Bucle principal del juego
+        while True:
+            # Mostrar la cabecera del juego
+            self.mostrarCabecera()
+ 
             # Muestra el tablero
             self.mostrarTablero()
 
@@ -100,13 +112,15 @@ class JuegoTresEnRaya:
 
             # Comprobar si el usuario ha ganado
             if self.comprobarVictoria(self.sign_user):
+                os.system("cls" if os.name == "nt" else "clear")
+                self.mostrarTablero()
                 print(estilos.color.verde + '\nEl ganador eres tú.' + estilos.color.RESET)
                 break
 
             # Comprobar si el tablero está lleno
             if self.comprobarTableroLleno():
                 break
-
+            
             # Vuelve a mostrar el tablero
             self.mostrarTablero()
 
@@ -121,6 +135,8 @@ class JuegoTresEnRaya:
             # Comprobar si el tablero está lleno
             if self.comprobarTableroLleno():
                 break
+
+            os.system("cls" if os.name == "nt" else "clear")
 
 # Crear una instancia del juego y comenzar
 juego = JuegoTresEnRaya()
