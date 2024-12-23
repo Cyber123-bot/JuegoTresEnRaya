@@ -163,6 +163,7 @@ class JuegoTresEnRaya:
             if self.comprobarTableroLleno():
                 break
 
+# Inicia el juego
 if __name__ == "__main__":
     juego = JuegoTresEnRaya()
     juego.iniciarJuego()
