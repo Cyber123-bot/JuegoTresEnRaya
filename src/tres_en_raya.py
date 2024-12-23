@@ -140,7 +140,8 @@ class JuegoTresEnRaya:
             # Comprobar si el usuario ha ganado
             if self.comprobarVictoria(self.sign_user):
                 self.limpiarTerminal() # Limpiar la pantalla
-                self.mostrarTablero()
+                self.mostrarCabecera() # Mostrar la cabecera
+                self.mostrarTablero() # Mostrar el tablero
                 print(estilos.color.verde + '\nEl ganador eres tú.' + estilos.color.RESET)
                 break
 
@@ -156,6 +157,8 @@ class JuegoTresEnRaya:
 
             # Comprobar si la máquina ha ganado
             if self.comprobarVictoria(self.sign_maquina):
+                self.limpiarTerminal() # Limpiar la pantalla
+                self.mostrarCabecera() # Mostrar la cabecera
                 print(estilos.color.rojo + '\nHas perdido. El ganador es la máquina.' + estilos.color.RESET)
                 break
 
