@@ -3,6 +3,8 @@ import estilos
 import os
 
 class JuegoTresEnRaya:
+
+    # Constantes para los signos del usuario y la máquina
     SIGN_USER = estilos.color.amarillo + 'O' + estilos.color.cian
     SIGN_MAQUINA = estilos.color.rojo + 'X' + estilos.color.cian
 
@@ -101,10 +103,18 @@ class JuegoTresEnRaya:
         # Comprobar si hay una combinación ganadora
         for combinacion in combinaciones_ganadoras:
             if all(self.__board[i] == sign for i in combinacion):
+                # Cambiar el color de los cuadrados ganadores
+                for i in combinacion:
+                    self.__board[i] = estilos.color.verde + f"{self.__board[i]}" + estilos.color.cian
+                
                 return True
             
         # Si no hay combinaciones ganadoras, el juego continúa
         return False
+    
+    def limpiarTerminal(self):
+        """Limpia la pantalla de la terminal"""
+        os.system("cls" if os.name == "nt" else "clear")
     
     def mostrarCabecera(self):
         """Muestra el título del juego"""
@@ -112,11 +122,12 @@ class JuegoTresEnRaya:
 
     def iniciarJuego(self):
         """Inicia el juego y alterna los turnos entre el usuario y la máquina"""
-        # Limpiar la pantalla
-        os.system("cls" if os.name == "nt" else "clear")
         
         # Bucle principal del juego
         while True:
+            # Limpiar la pantalla
+            self.limpiarTerminal()
+
             # Mostrar la cabecera del juego
             self.mostrarCabecera()
  
@@ -128,7 +139,7 @@ class JuegoTresEnRaya:
 
             # Comprobar si el usuario ha ganado
             if self.comprobarVictoria(self.sign_user):
-                os.system("cls" if os.name == "nt" else "clear")
+                self.limpiarTerminal() # Limpiar la pantalla
                 self.mostrarTablero()
                 print(estilos.color.verde + '\nEl ganador eres tú.' + estilos.color.RESET)
                 break
@@ -151,8 +162,6 @@ class JuegoTresEnRaya:
             # Comprobar si el tablero está lleno
             if self.comprobarTableroLleno():
                 break
-
-            os.system("cls" if os.name == "nt" else "clear")
 
 if __name__ == "__main__":
     juego = JuegoTresEnRaya()
