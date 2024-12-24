@@ -25,4 +25,5 @@ Asegúrate de que tu código pasa todas las pruebas unitarias antes de enviar un
 ## Contacta Conmigo
 Si tienes alguna pregunta, sugerencia o quieres conectar, no dudes en escribirme por correo electrónico a [cyber123.bot@gmail.com].
 
+---
 ¡Gracias por contribuir!
