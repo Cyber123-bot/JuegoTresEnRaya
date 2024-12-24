@@ -176,6 +176,7 @@ class JuegoTresEnRaya:
             if self.comprobarVictoria(self.sign_maquina):
                 self.limpiarTerminal() # Limpiar la pantalla
                 self.mostrarCabecera() # Mostrar la cabecera
+                self.mostrarTablero() # Mostrar el tablero
                 print(estilos.color.rojo + '\nHas perdido. El ganador es la máquina.' + estilos.color.RESET)
                 break
 
