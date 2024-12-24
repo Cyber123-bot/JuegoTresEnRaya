@@ -77,19 +77,30 @@ class JuegoTresEnRaya:
                 self.__board[user_move - 1] = self.sign_user
                 break
 
-    def escribirMovimientoMaquina(self, modo_inteligente=False):
-        """La función dibuja el movimiento de la máquina y actualiza el tablero."""
-        while True:
-            if modo_inteligente:
-                # Si el modo inteligente está activado, la máquina intenta ganar
-                
-            else:
-                case = random.randint(1, 9) - 1  # Convertimos a índice de lista
+    def escribirMovimientoMaquina(self):
+        """La máquina realiza su movimiento de manera estratégica."""
+        for combinacion in self.COMBINACIONES_GANADORAS:
+            # Verificar si la máquina puede ganar
+            valores = [self.__board[i] for i in combinacion]
+            if valores.count(self.sign_maquina) == 2 and valores.count(self.sign_user) == 0:
+                for i in combinacion:
+                    if self.__board[i] not in [self.sign_user, self.sign_maquina]:
+                        self.__board[i] = self.sign_maquina
+                        return
 
-                # Si el cuadrado está ocupado, la máquina lo intenta de nuevo
-                if self.__board[case] not in [self.sign_maquina, self.sign_user]:
-                    self.__board[case] = self.sign_maquina
-                    break
+        for combinacion in self.COMBINACIONES_GANADORAS:
+            # Verificar si puede bloquear al usuario
+            valores = [self.__board[i] for i in combinacion]
+            if valores.count(self.sign_user) == 2 and valores.count(self.sign_maquina) == 0:
+                for i in combinacion:
+                    if self.__board[i] not in [self.sign_user, self.sign_maquina]:
+                        self.__board[i] = self.sign_maquina
+                        return
+
+        # Movimiento aleatorio si no puede ganar ni bloquear
+        movimientos_disponibles = [i for i, spot in enumerate(self.__board) if spot not in [self.sign_user, self.sign_maquina]]
+        if movimientos_disponibles:
+            self.__board[random.choice(movimientos_disponibles)] = self.sign_maquina
 
     def comprobarTableroLleno(self):
         """La función examina el tablero y termina el juego si no hay cuadros vacíos."""
