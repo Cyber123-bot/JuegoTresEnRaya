@@ -47,7 +47,7 @@ class JuegoTresEnRaya:
         while True:
             try:
                 user_move = input(estilos.color.azul + '\nIngresa tu movimiento (1-9) [exit -> para salir]: ' + estilos.color.RESET)
-            
+
             except KeyboardInterrupt:
                 print() # Salto de línea
                 print(estilos.color.azul + '¡Adiós!' + estilos.color.RESET)
@@ -59,6 +59,7 @@ class JuegoTresEnRaya:
 
             try:
                 user_move = int(user_move)
+
                 if user_move < 1 or user_move > 9:
                     # Lanzar una excepción si el movimiento está fuera de rango
                     raise ValueError(estilos.color.rojo + "\nMovimiento fuera de rango." + estilos.color.RESET)
@@ -134,16 +135,6 @@ class JuegoTresEnRaya:
     def mostrarCabecera(self):
         """Muestra el título del juego"""
         print(estilos.color.purpura + '\n\t\tTRES EN RAYA' + estilos.color.RESET) # Título del juego
-    
-    """def mostrarCabecera(self, usar_colores=True):
-        \"""Muestra el título del juego\"""
-        texto = '\n\t\tTRES EN RAYA'
-        if usar_colores:
-            print(estilos.color.purpura + texto + estilos.color.RESET)
-        
-        else:
-            print(texto)"""
-
 
     def iniciarJuego(self):
         """Inicia el juego y alterna los turnos entre el usuario y la máquina"""
