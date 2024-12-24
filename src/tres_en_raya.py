@@ -4,15 +4,27 @@ import os
 
 class JuegoTresEnRaya:
 
-    # Constantes para los signos del usuario y la máquina
+    # Constantes para los signos del usuario,  la máquina y las combinaciones ganadoras
     SIGN_USER = estilos.color.amarillo + 'O' + estilos.color.cian
     SIGN_MAQUINA = estilos.color.rojo + 'X' + estilos.color.cian
+    COMBINACIONES_GANADORAS = (
+            (0, 1, 2),  # Fila 1
+            (3, 4, 5),  # Fila 2
+            (6, 7, 8),  # Fila 3
+            (0, 3, 6),  # Columna 1
+            (1, 4, 7),  # Columna 2
+            (2, 5, 8),  # Columna 3
+            (0, 4, 8),  # Diagonal principal
+            (2, 4, 6)   # Diagonal secundaria
+    )
+
 
     def __init__(self):
         """Esta clase representa el juego de tres en raya."""
         self.__board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         self.sign_user = self.SIGN_USER
         self.sign_maquina = self.SIGN_MAQUINA
+        self.__combinaciones_ganadoras = self.COMBINACIONES_GANADORAS
 
     def mostrarTablero(self):
         """Muestra el estado actual del tablero en la consola"""
@@ -65,16 +77,19 @@ class JuegoTresEnRaya:
                 self.__board[user_move - 1] = self.sign_user
                 break
 
-    def escribirMovimientoMaquina(self):
+    def escribirMovimientoMaquina(self, modo_inteligente=False):
         """La función dibuja el movimiento de la máquina y actualiza el tablero."""
         while True:
+            if modo_inteligente:
+                # Si el modo inteligente está activado, la máquina intenta ganar
+                
+            else:
+                case = random.randint(1, 9) - 1  # Convertimos a índice de lista
 
-            case = random.randint(1, 9) - 1  # Convertimos a índice de lista
-
-            # Si el cuadrado está ocupado, la máquina lo intenta de nuevo
-            if self.__board[case] not in [self.sign_maquina, self.sign_user]:
-                self.__board[case] = self.sign_maquina
-                break
+                # Si el cuadrado está ocupado, la máquina lo intenta de nuevo
+                if self.__board[case] not in [self.sign_maquina, self.sign_user]:
+                    self.__board[case] = self.sign_maquina
+                    break
 
     def comprobarTableroLleno(self):
         """La función examina el tablero y termina el juego si no hay cuadros vacíos."""
@@ -89,19 +104,8 @@ class JuegoTresEnRaya:
 
     def comprobarVictoria(self, sign):
         """La función analiza el estatus del tablero para verificar el ganador"""
-        combinaciones_ganadoras = (
-            (0, 1, 2),  # Fila 1
-            (3, 4, 5),  # Fila 2
-            (6, 7, 8),  # Fila 3
-            (0, 3, 6),  # Columna 1
-            (1, 4, 7),  # Columna 2
-            (2, 5, 8),  # Columna 3
-            (0, 4, 8),  # Diagonal principal
-            (2, 4, 6)   # Diagonal secundaria
-        )
-
         # Comprobar si hay una combinación ganadora
-        for combinacion in combinaciones_ganadoras:
+        for combinacion in self.__combinaciones_ganadoras:
             if all(self.__board[i] == sign for i in combinacion):
                 # Cambiar el color de los cuadrados ganadores
                 for i in combinacion:
