@@ -78,6 +78,7 @@ class JuegoTresEnRaya:
                 self.__board[user_move - 1] = self.sign_user
                 break
 
+
     def escribirMovimientoMaquina(self):
         """La máquina realiza su movimiento de manera estratégica."""
         for combinacion in self.COMBINACIONES_GANADORAS:
