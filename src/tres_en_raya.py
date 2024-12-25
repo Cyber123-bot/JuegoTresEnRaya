@@ -21,7 +21,7 @@ class JuegoTresEnRaya:
 
     def __init__(self):
         """Esta clase representa el juego de tres en raya."""
-        self.__board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        self.board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         self.sign_user = self.SIGN_USER
         self.sign_maquina = self.SIGN_MAQUINA
         self.__combinaciones_ganadoras = self.COMBINACIONES_GANADORAS
@@ -30,15 +30,15 @@ class JuegoTresEnRaya:
         """Muestra el estado actual del tablero en la consola"""
         print(estilos.color.cian + '\t+-------+-------+-------+', 
               '\t|       |       |       |', 
-              f'\t|   {self.__board[0]}   |   {self.__board[1]}   |   {self.__board[2]}   |', 
+              f'\t|   {self.board[0]}   |   {self.board[1]}   |   {self.board[2]}   |', 
               '\t|       |       |       |', 
               '\t+-------+-------+-------+',
               '\t|       |       |       |',
-              f'\t|   {self.__board[3]}   |   {self.__board[4]}   |   {self.__board[5]}   |',
+              f'\t|   {self.board[3]}   |   {self.board[4]}   |   {self.board[5]}   |',
               '\t|       |       |       |',
               '\t+-------+-------+-------+',
               '\t|       |       |       |',
-              f'\t|   {self.__board[6]}   |   {self.__board[7]}   |   {self.__board[8]}   |',
+              f'\t|   {self.board[6]}   |   {self.board[7]}   |   {self.board[8]}   |',
               '\t|       |       |       |',
               '\t+-------+-------+-------+' + estilos.color.RESET, sep='\n')
 
@@ -70,12 +70,12 @@ class JuegoTresEnRaya:
                 continue
             
             # Comprobar si el cuadrado está ocupado
-            if self.__board[user_move - 1] in [self.sign_maquina, self.sign_user]:
+            if self.board[user_move - 1] in [self.sign_maquina, self.sign_user]:
                 print(estilos.color.naranja + '\nCuadrado ocupado. Intenta de nuevo.' + estilos.color.RESET)
 
             # Si el cuadrado está vacío, actualiza el tablero
             else:
-                self.__board[user_move - 1] = self.sign_user
+                self.board[user_move - 1] = self.sign_user
                 break
 
 
@@ -83,31 +83,31 @@ class JuegoTresEnRaya:
         """La máquina realiza su movimiento de manera estratégica."""
         for combinacion in self.COMBINACIONES_GANADORAS:
             # Verificar si la máquina puede ganar
-            valores = [self.__board[i] for i in combinacion]
+            valores = [self.board[i] for i in combinacion]
             if valores.count(self.sign_maquina) == 2 and valores.count(self.sign_user) == 0:
                 for i in combinacion:
-                    if self.__board[i] not in [self.sign_user, self.sign_maquina]:
-                        self.__board[i] = self.sign_maquina
+                    if self.board[i] not in [self.sign_user, self.sign_maquina]:
+                        self.board[i] = self.sign_maquina
                         return
 
         for combinacion in self.COMBINACIONES_GANADORAS:
             # Verificar si puede bloquear al usuario
-            valores = [self.__board[i] for i in combinacion]
+            valores = [self.board[i] for i in combinacion]
             if valores.count(self.sign_user) == 2 and valores.count(self.sign_maquina) == 0:
                 for i in combinacion:
-                    if self.__board[i] not in [self.sign_user, self.sign_maquina]:
-                        self.__board[i] = self.sign_maquina
+                    if self.board[i] not in [self.sign_user, self.sign_maquina]:
+                        self.board[i] = self.sign_maquina
                         return
 
         # Movimiento aleatorio si no puede ganar ni bloquear
-        movimientos_disponibles = [i for i, spot in enumerate(self.__board) if spot not in [self.sign_user, self.sign_maquina]]
+        movimientos_disponibles = [i for i, spot in enumerate(self.board) if spot not in [self.sign_user, self.sign_maquina]]
         if movimientos_disponibles:
-            self.__board[random.choice(movimientos_disponibles)] = self.sign_maquina
+            self.board[random.choice(movimientos_disponibles)] = self.sign_maquina
 
     def comprobarTableroLleno(self):
         """La función examina el tablero y termina el juego si no hay cuadros vacíos."""
         # Si todos los cuadros están ocupados, el juego termina en empate
-        if all(spot in [self.sign_maquina, self.sign_user] for spot in self.__board):
+        if all(spot in [self.sign_maquina, self.sign_user] for spot in self.board):
             print(estilos.color.naranja + '\nEmpate.' + estilos.color.RESET)
             return True
         
@@ -119,10 +119,10 @@ class JuegoTresEnRaya:
         """La función analiza el estatus del tablero para verificar el ganador"""
         # Comprobar si hay una combinación ganadora
         for combinacion in self.__combinaciones_ganadoras:
-            if all(self.__board[i] == sign for i in combinacion):
+            if all(self.board[i] == sign for i in combinacion):
                 # Cambiar el color de los cuadrados ganadores
                 for i in combinacion:
-                    self.__board[i] = estilos.color.verde + f"{self.__board[i]}" + estilos.color.cian
+                    self.board[i] = estilos.color.verde + f"{self.board[i]}" + estilos.color.cian
                 
                 return True
             
