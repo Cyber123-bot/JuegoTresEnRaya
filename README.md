@@ -8,6 +8,9 @@ Este es un juego de Tres en Raya (Tic-Tac-Toe) implementado en Python. El juego 
 - Módulo `estilos` (debe estar en el mismo directorio que `calculadora.py`)
 - Módulo `os`
 
+## Testeo
+Para asegurarte de que todo funciona correctamente puedes ejecutar el archivo `src/test.py`
+
 ## Instalación
 
 1. Clona este repositorio en tu máquina local:
