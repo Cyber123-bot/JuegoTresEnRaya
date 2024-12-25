@@ -18,7 +18,7 @@ Este es un juego de Tres en Raya (Tic-Tac-Toe) implementado en Python. El juego 
 
 ## Cómo jugar
 
-1. Ejecuta el archivo `tres_en_raya.py`:
+1. Ejecuta el archivo `pruebas.py`:
     ```bash
     python tres_en_raya.py
     ```
