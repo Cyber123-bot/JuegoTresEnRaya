@@ -120,10 +120,6 @@ class JuegoTresEnRaya:
         # Comprobar si hay una combinación ganadora
         for combinacion in self.__combinaciones_ganadoras:
             if all(self.board[i] == sign for i in combinacion):
-                # Cambiar el color de los cuadrados ganadores
-                for i in combinacion:
-                    self.board[i] = estilos.color.verde + self.board[i] + estilos.color.cian
-                
                 return True
             
         # Si no hay combinaciones ganadoras, el juego continúa
