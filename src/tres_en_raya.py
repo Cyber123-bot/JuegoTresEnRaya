@@ -122,7 +122,7 @@ class JuegoTresEnRaya:
             if all(self.board[i] == sign for i in combinacion):
                 # Cambiar el color de los cuadrados ganadores
                 for i in combinacion:
-                    self.board[i] = estilos.color.verde + f"{self.board[i]}" + estilos.color.cian
+                    self.board[i] = estilos.color.verde + self.board[i] + estilos.color.cian
                 
                 return True
             
