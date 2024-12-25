@@ -1,0 +1,41 @@
+# Ignorar específico de Python
+__pycache__/
+*.py[cod]
+
+# Entorno virtual
+venv/
+.env/
+
+# Archivos de bytes compilados / optimizados / DLL
+*.pyc
+*.pyo
+*.pyd
+
+# Distribución / empaquetado
+.Python
+build/
+dist/
+*.egg-info/
+*.eggs
+
+# Registros (logs)
+*.log
+*.out
+*.err
+
+# Archivos específicos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar específico del IDE
+.vscode/
+.idea/
+*.iml
+
+# Variables de entorno
+.env
+
+# Exclusiones personalizadas para el juego del ahorcado
+config.json
+highscores.json
+data/*.txt
