@@ -183,3 +183,8 @@ class JuegoTresEnRaya:
             # Comprobar si el tablero está lleno
             if self.comprobarTableroLleno():
                 break
+
+# Iniciar el juego
+if __name__ == "__main__":
+    juego = JuegoTresEnRaya()
+    juego.iniciarJuego()
