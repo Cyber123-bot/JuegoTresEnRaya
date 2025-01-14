@@ -1,6 +1,6 @@
 # Ignorar específico de Python
 __pycache__/
-*.pyc
+*.py[doc]
 
 # Entorno virtual
 venv/
