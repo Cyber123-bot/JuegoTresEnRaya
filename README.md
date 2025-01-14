@@ -5,7 +5,7 @@ Este es un juego de Tres en Raya (Tic-Tac-Toe) implementado en Python. El juego 
 ## Requisitos
 
 - `Python 3.x`
-- Módulo `estilos` (debe estar en el mismo directorio que `calculadora.py`)
+- Módulo `estilos` (debe estar en el mismo directorio que `tres_en_raya.py`)
 - Módulo `os`
 
 ## Testeo
