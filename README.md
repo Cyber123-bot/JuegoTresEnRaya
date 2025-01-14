@@ -1,6 +1,6 @@
 # Juego Tres en Raya
 
-Este es un juego de Tres en Raya (Tic-Tac-Toe) implementado en Python. El juego permite a un usuario jugar contra la máquina.
+Este es un juego de Tres en Raya (Tic-Tac-Toe) implementado en Python. El juego permite a un usuario jugar contra la máquina o contra otro usuario.
 
 ## Requisitos
 
@@ -32,13 +32,13 @@ Para asegurarte de que todo funciona correctamente puedes ejecutar el archivo `s
 
 - `JuegoTresEnRaya`: Clase principal que maneja la lógica del juego.
   - `__init__()`: declara las variables de __board, sign_user y sign_máquina.
-  - `mostrarTablero()`: Muestra el estado actual del tablero.
-  - `introducirEscribirMovimiento()`: Pide al usuario su movimiento y actualiza el tablero.
-  - `escribirMovimientoMaquina()`: Realiza el movimiento de la máquina.
-  - `comprobarTableroLleno()`: Verifica si el tablero está lleno.
-  - `comprobarVictoria(sign)`: Verifica si hay un ganador.
-  - `limpiarTerminal()`: Limpia la pantalla de la terminal.
-  - `mostrarCabecera()`: Muestra el título del juego.
+  - `_mostrarTablero()`: Muestra el estado actual del tablero.
+  - `_entradaUsuario()`: Pide al usuario su movimiento y actualiza el tablero.
+  - `_escribirMovimientoMaquina()`: Realiza el movimiento de la máquina.
+  - `_comprobarTableroLleno()`: Verifica si el tablero está lleno.
+  - `_comprobarVictoria(sign)`: Verifica si hay un ganador.
+  - `_limpiarTerminal()`: Limpia la pantalla de la terminal.
+  - `_mostrarCabecera()`: Muestra el título del juego.
   - `iniciarJuego()`: Inicia el juego y alterna los turnos entre el usuario y la máquina.
 
 ## Contribuciones
