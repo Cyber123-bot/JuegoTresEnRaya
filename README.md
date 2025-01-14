@@ -25,13 +25,13 @@ Para asegurarte de que todo funciona correctamente puedes ejecutar el archivo `s
     ```bash
     python tres_en_raya.py
     ```
-2. Sigue las instrucciones en la consola para realizar tu movimiento. Ingresa un número del 1 al 9 para colocar tu signo en el tablero.
-3. El juego alternará entre tu movimiento y el de la máquina hasta que haya un ganador o el tablero esté lleno.
+2. Elige el modo de juego
+2. Sigue las instrucciones en la consola para realizar tu movimiento. 
 
 ## Estructura del código
 
 - `JuegoTresEnRaya`: Clase principal que maneja la lógica del juego.
-  - `__init__()`: declara las variables de __board, sign_user y sign_máquina.
+  - `__init__()`: declara la variable board, y la lista de sign.
   - `_mostrarTablero()`: Muestra el estado actual del tablero.
   - `_entradaUsuario()`: Pide al usuario su movimiento y actualiza el tablero.
   - `_escribirMovimientoMaquina()`: Realiza el movimiento de la máquina.
