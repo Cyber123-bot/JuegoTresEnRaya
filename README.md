@@ -36,7 +36,7 @@ Para asegurarte de que todo funciona correctamente puedes ejecutar el archivo `s
   - `_entradaUsuario()`: Pide al usuario su movimiento y actualiza el tablero.
   - `_escribirMovimientoMaquina()`: Realiza el movimiento de la máquina.
   - `_comprobarTableroLleno()`: Verifica si el tablero está lleno.
-  - `_comprobarVictoria(sign)`: Verifica si hay un ganador.
+  - `_comprobarVictoria()`: Verifica si hay un ganador.
   - `_limpiarTerminal()`: Limpia la pantalla de la terminal.
   - `_mostrarCabecera()`: Muestra el título del juego.
   - `iniciarJuego()`: Inicia el juego y alterna los turnos entre el usuario y la máquina.
