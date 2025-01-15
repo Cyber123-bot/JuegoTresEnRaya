@@ -26,7 +26,7 @@ Para asegurarte de que todo funciona correctamente puedes ejecutar el archivo `s
     python tres_en_raya.py
     ```
 2. Elige el modo de juego
-2. Sigue las instrucciones en la consola para realizar tu movimiento. 
+2. Sigue las instrucciones en la consola para realizar tu movimiento.
 
 ## Estructura del código
 

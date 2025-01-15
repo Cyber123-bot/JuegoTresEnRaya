@@ -29,7 +29,7 @@ class JuegoTresEnRaya:
         """Muestra el estado actual del tablero en la consola"""
         print(estilos.color.cian + '\t+-------+-------+-------+', 
               '\t|       |       |       |', 
-              f'\t|   {self.board[0]}   |   {self.board[1]}   |   {self.board[2]}   |', 
+              f'\t|   {self.board[0]}   |   {self.board[1]}   |   {self.board[2]}   |',
               '\t|       |       |       |', 
               '\t+-------+-------+-------+',
               '\t|       |       |       |',
