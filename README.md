@@ -7,6 +7,8 @@ Este es un juego de Tres en Raya (Tic-Tac-Toe) implementado en Python. El juego 
 - `Python 3.x`
 - Módulo `estilos` (debe estar en el mismo directorio que `tres_en_raya.py`)
 - Módulo `os`
+- Módulo `random`
+- Módulo `time`
 
 ## Testeo
 Para asegurarte de que todo funciona correctamente puedes ejecutar el archivo `src/test.py`

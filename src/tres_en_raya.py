@@ -1,10 +1,11 @@
 import random
-import estilos
+import estilos # Archivo
 import os
+import time
 
 class JuegoTresEnRaya:
 
-    # Constantes para los signos del usuario,  la máquina y las combinaciones ganadoras
+    # Constantes para los signos del usuario1, la máquina/usuario2 y las combinaciones ganadoras
     SIGN_USER1 = estilos.color.amarillo + 'O' + estilos.color.cian
     SIGN_MAQUINA = estilos.color.rojo + 'X' + estilos.color.cian
     COMBINACIONES_GANADORAS = (
@@ -47,16 +48,16 @@ class JuegoTresEnRaya:
             try:
                 user_move = input(estilos.color.azul + f'\n{usuario}us. Ingresa tu movimiento (1-9) [exit -> para salir]: ' + estilos.color.RESET)
 
-            # Cuando el usuario pulse Ctrl + C sale del juego
+            # Cuando el usuario pulse Ctrl + C salir del juego
             except KeyboardInterrupt:
                 print() # Salto de línea
                 print(estilos.color.azul + '¡Adiós!' + estilos.color.RESET)
-                exit() # Sale del juego
+                exit() # Salir del juego
 
             # Comprobamos si el usuario quiere salir
             if user_move == 'exit':
                 print(estilos.color.cian + '\n¡Adiós!' + estilos.color.RESET)
-                exit() # Sale del juego
+                exit() # Salir del juego
 
             try:
                 user_move = int(user_move)
@@ -121,7 +122,7 @@ class JuegoTresEnRaya:
             return False
 
     def _comprobarVictoria(self, sign):
-        """La función analiza el estatus del tablero para verificar el ganador"""
+        """La función analiza el estado del tablero para verificar el ganador"""
         # Comprobar si hay una combinación ganadora
         for combinacion in self.__combinaciones_ganadoras:
             if all(self.board[i] == sign for i in combinacion):
@@ -132,7 +133,7 @@ class JuegoTresEnRaya:
     
     def _limpiarTerminal(self):
         """Limpia la pantalla de la terminal"""
-        os.system("cls" if os.name == "nt" else "clear")
+        os.system("cls" if os.name == "nt" else "clear") # Usar la el módulo system de os para ejecutar un comando en la terminal
     
     def _mostrarCabecera(self):
         """Muestra el título del juego"""
@@ -251,6 +252,27 @@ class JuegoTresEnRaya:
                     # Comprobar si el tablero está lleno
                     if self._comprobarTableroLleno():
                         break
+        
+        # Pregunta al usuario si quiere reiniciar el juego
+        resp = input(estilos.color.azul + "\n¿Quieres volver a jugar [s | n]?: " + estilos.color.RESET).lower()
+
+        # Esperamos 0.5 segundos
+        time.sleep(0.5)
+
+        # En caso de que quiera reiniciar el juego lo reiniciamos
+        if resp == "s":
+            self.board = [1, 2, 3, 4, 5, 6, 7, 8, 9] # Ponemos el tablero en su posición original
+            self.iniciarJuego() # Volvemos a iniciar el juego
+
+        # En caso de que no quiera reiniciar el juego salimos
+        elif resp == "n":
+            print(estilos.color.cian + "\n¡Adios!" + estilos.color.RESET)
+            exit()
+
+        # Si la respuesta es inválida lanzamos un mensaje de error y salimos
+        else:
+            print(estilos.color.rojo + "\nLa respuesta no es válida. Solo se puede responder 's' o 'n'." + estilos.color.RESET)
+
 
 # Iniciar el juego
 if __name__ == "__main__":
