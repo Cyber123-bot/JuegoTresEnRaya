@@ -167,7 +167,7 @@ class JuegoTresEnRaya:
             
         # Comprobamos la validez de la respuesta
         if modo not in modo_juego.keys():
-            print(estilos.color.rojo + f"Respuesta inválida. Solo se puede responder: {modo_juego[0]} o {modo_juego[1]}" + estilos.color.RESET)
+            print(estilos.color.rojo + f"Respuesta inválida. Solo se puede responder: {modo_juego["1"]} o {modo_juego["2"]}" + estilos.color.RESET)
 
         # Si la respuesta es válida iniciamos el modo de juego que el ha dicho
         else:
