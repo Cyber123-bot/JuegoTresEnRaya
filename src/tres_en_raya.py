@@ -228,7 +228,7 @@ class JuegoTresEnRaya:
                         self._limpiarTerminal() # Limpiar la pantalla
                         self._mostrarCabecera() # Mostrar la cabecera
                         self._mostrarTablero() # Mostrar el tablero
-                        print(estilos.color.verde + '\nEl ganador eres tú.' + estilos.color.RESET)
+                        print(estilos.color.verde + "\nEl ganador eres tú." + estilos.color.RESET)
                         break
 
                     # Comprobar si el tablero está lleno
