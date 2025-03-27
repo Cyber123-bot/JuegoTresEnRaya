@@ -19,12 +19,50 @@ class JuegoTresEnRaya:
             (2, 4, 6)   # Diagonal secundaria
     )
 
-
     def __init__(self):
         """Esta clase representa el juego de tres en raya."""
         self.board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         self.sign = (self.SIGN_USER1, self.SIGN_MAQUINA)
         self.__combinaciones_ganadoras = self.COMBINACIONES_GANADORAS
+        self.velocidad = 0.03
+
+    def _texto_animado(self, texto):
+        ''' Función que recibe un texto y lo imprime letra por letra con retraso especificado por el usuario (predeterminado 0.03 segundos) '''
+        # Recorrer carácter por caracter el texto/frase introducida
+        for char in texto:
+            print(char, end="", flush=True)
+            time.sleep(self.velocidad) # Retraso
+
+        print() # Añadir salto de línea
+
+    def _comprobarTableroLleno(self):
+        """La función examina el tablero y termina el juego si no hay cuadros vacíos."""
+        # Si todos los cuadros están ocupados, el juego termina en empate
+        if all(spot in [self.sign[1], self.sign[0]] for spot in self.board):
+            self._texto_animado(estilos.color.naranja + '\nEmpate.' + estilos.color.RESET)
+            return True
+        
+        # Si hay cuadros vacíos, el juego continúa
+        else:
+            return False
+
+    def _comprobarVictoria(self, sign):
+        """La función analiza el estado del tablero para verificar el ganador"""
+        # Comprobar si hay una combinación ganadora
+        for combinacion in self.__combinaciones_ganadoras:
+            if all(self.board[i] == sign for i in combinacion):
+                return True
+            
+        # Si no hay combinaciones ganadoras, el juego continúa
+        return False
+    
+    def _limpiarTerminal(self):
+        """Limpia la pantalla de la terminal"""
+        os.system("cls" if os.name == "nt" else "clear") # Usar os.system para ejecutar un comando en la terminal
+    
+    def _mostrarCabecera(self):
+        """Muestra el título del juego y más datos"""
+        print(estilos.color.purpura + '\n\t\tTRES EN RAYA' + estilos.color.RESET) # Título del juego
 
     def _mostrarTablero(self):
         """Muestra el estado actual del tablero en la consola"""
@@ -42,21 +80,36 @@ class JuegoTresEnRaya:
               '\t|       |       |       |',
               '\t+-------+-------+-------+' + estilos.color.RESET, sep='\n')
 
-    def _entradaUsuario(self, usuario: int):
+    def _preguntar_nombre(self, n_usuario: int):
+        """ Función que pregunta al usuario su nombre """
+
+        try:
+            print() # Salto de línea
+
+            # Preguntar el nombre al usuario
+            nombre = input(estilos.color.azul + f"¿Cual es tu nombre usuario {n_usuario}?: " + estilos.color.RESET)
+
+            return nombre.capitalize() # Retornar nombre
+
+        # Si el usuario presiona Ctrl + C, salimos
+        except KeyboardInterrupt:
+            self._texto_animado("\n¡Adiós!")
+            exit() # Salir
+
+    def _entradaUsuario(self, usuario: tuple):
         """La función pregunta al usuario acerca de su movimiento y actualiza el tablero"""
         while True:
             try:
-                user_move = input(estilos.color.azul + f'\n{usuario}us. Ingresa tu movimiento (1-9) [exit -> para salir]: ' + estilos.color.RESET)
+                user_move = input(estilos.color.azul + f'\nIngresa tu movimiento, {estilos.color.cian + usuario[0] + estilos.color.azul} [1-9 | exit -> para salir]: ' + estilos.color.RESET)
 
             # Cuando el usuario pulse Ctrl + C salir del juego
             except KeyboardInterrupt:
-                print() # Salto de línea
-                print(estilos.color.azul + '¡Adiós!' + estilos.color.RESET)
+                self._texto_animado(estilos.color.cian + '\n¡Adiós!' + estilos.color.RESET)
                 exit() # Salir del juego
 
             # Comprobamos si el usuario quiere salir
             if user_move == 'exit':
-                print(estilos.color.cian + '\n¡Adiós!' + estilos.color.RESET)
+                self._texto_animado(estilos.color.cian + '\n¡Adiós!' + estilos.color.RESET)
                 exit() # Salir del juego
 
             try:
@@ -68,16 +121,16 @@ class JuegoTresEnRaya:
             
             except ValueError:
                 # Capturar la excepción y mostrar un mensaje de error
-                print(estilos.color.rojo + "\nMovimiento no válido. Debes ingresar un número entre 1 y 9." + estilos.color.RESET)
+                self._texto_animado(estilos.color.rojo + "\nMovimiento no válido. Debes ingresar un número entre 1 y 9." + estilos.color.RESET)
                 continue
             
             # Comprobar si el cuadrado está ocupado
             if self.board[user_move - 1] in self.sign:
-                print(estilos.color.naranja + '\nCuadrado ocupado. Intenta de nuevo.' + estilos.color.RESET)
+                self._texto_animado(estilos.color.naranja + '\nCuadrado ocupado. Intenta de nuevo.' + estilos.color.RESET)
 
             # Si el cuadrado está vacío, actualiza el tablero dependiendo del usuario
             else:
-                if usuario == 1:
+                if usuario[1] == 1:
                     self.board[user_move - 1] = self.sign[0]
                     break
 
@@ -110,35 +163,6 @@ class JuegoTresEnRaya:
         if movimientos_disponibles:
             self.board[random.choice(movimientos_disponibles)] = self.sign[1]
 
-    def _comprobarTableroLleno(self):
-        """La función examina el tablero y termina el juego si no hay cuadros vacíos."""
-        # Si todos los cuadros están ocupados, el juego termina en empate
-        if all(spot in [self.sign[1], self.sign[0]] for spot in self.board):
-            print(estilos.color.naranja + '\nEmpate.' + estilos.color.RESET)
-            return True
-        
-        # Si hay cuadros vacíos, el juego continúa
-        else:
-            return False
-
-    def _comprobarVictoria(self, sign):
-        """La función analiza el estado del tablero para verificar el ganador"""
-        # Comprobar si hay una combinación ganadora
-        for combinacion in self.__combinaciones_ganadoras:
-            if all(self.board[i] == sign for i in combinacion):
-                return True
-            
-        # Si no hay combinaciones ganadoras, el juego continúa
-        return False
-    
-    def _limpiarTerminal(self):
-        """Limpia la pantalla de la terminal"""
-        os.system("cls" if os.name == "nt" else "clear") # Usar la el módulo system de os para ejecutar un comando en la terminal
-    
-    def _mostrarCabecera(self):
-        """Muestra el título del juego"""
-        print(estilos.color.purpura + '\n\t\tTRES EN RAYA' + estilos.color.RESET) # Título del juego
-
     def iniciarJuego(self):
         """Inicia el juego y alterna los turnos entre el usuario y la máquina"""
         # Variables para los modos de juego
@@ -154,61 +178,79 @@ class JuegoTresEnRaya:
         print()
 
         # Preguntamos al usuario que modo de juego desea
-        print(estilos.color.cian + f"1. {modo_juego['1']}" + estilos.color.RESET)
-        print(estilos.color.cian + f"2. {modo_juego['2']}" + estilos.color.RESET)
+        self._texto_animado(estilos.color.cian + f"1. {modo_juego['1']}" + estilos.color.RESET)
+        self._texto_animado(estilos.color.cian + f"2. {modo_juego['2']}" + estilos.color.RESET)
         try:
             modo = input(estilos.color.azul + f"\n¿Qué modo de juego deseas [1 | 2]?: " + estilos.color.RESET).replace(" ", "")
 
         # Capturamos el KeyboardInterrupt
         except KeyboardInterrupt:
-            print() # Salto de linea
-            print(estilos.color.cian + '\n¡Adiós!' + estilos.color.RESET)
+            self._texto_animado(estilos.color.cian + '\n¡Adiós!' + estilos.color.RESET)
             exit() # Sale del juego
             
         # Comprobamos la validez de la respuesta
         if modo not in modo_juego.keys():
-            print(estilos.color.rojo + f"Respuesta inválida. Solo se puede responder: {modo_juego['1']} o {modo_juego['2']}" + estilos.color.RESET)
+            self._texto_animado(estilos.color.rojo + f"Respuesta inválida. Solo se puede responder: {modo_juego['1']} o {modo_juego['2']}" + estilos.color.RESET)
 
         # Si la respuesta es válida iniciamos el modo de juego que el ha dicho
         else:
-            # Limpiar la pantalla
-            self._limpiarTerminal()
-
-            # Mostrar la cabecera del juego
-            self._mostrarCabecera()
-
             if modo == "1":
+                # Pedimos los nombres
+                nombre_usuario_1 = self._preguntar_nombre("1")
+                nombre_usuario_2 = self._preguntar_nombre("2")
+
+                # Comprobamos si los nombres son válidos son validos
+                if nombre_usuario_1 == nombre_usuario_2:
+                    print(estilos.color.rojo + "Error: los dos nombres son iguales.")
+                    exit() # Salir
+
+                elif nombre_usuario_1.replace(" ", "") == "" or nombre_usuario_2.replace(" ", "") == 0:
+                    print(estilos.color.rojo + "El nombre no es válido." + estilos.color.RESET)
+                    exit() # Salir
+
                 while True:
+                    # Limpiar la pantalla
+                    self._limpiarTerminal()
+
+                    # Mostrar la cabecera del juego
+                    self._mostrarCabecera()
+
                     # Muestra el tablero
                     self._mostrarTablero()
 
                     # Pide al usuario 1 su movimiento
-                    self._entradaUsuario(1)
+                    self._entradaUsuario((nombre_usuario_1, 1))
 
                     # Comprobar si el usuario 1 ha ganado
                     if self._comprobarVictoria(self.sign[0]):
                         self._limpiarTerminal() # Limpiar la pantalla
                         self._mostrarCabecera() # Mostrar la cabecera
                         self._mostrarTablero() # Mostrar el tablero
-                        print(estilos.color.verde + '\nEl ganador es el usuario 1.' + estilos.color.RESET)
+                        self._texto_animado(estilos.color.verde + f'\nEl ganador es {nombre_usuario_1}.' + estilos.color.RESET)
                         break
 
                     # Comprobar si el tablero está lleno
                     if self._comprobarTableroLleno():
                         break
             
-                    # Vuelve a mostrar el tablero
+                    # Limpiar la terminal
+                    self._limpiarTerminal()
+
+                    # Imprimir cabecera del juego
+                    self._mostrarCabecera()
+
+                    # Mostrar el tablero
                     self._mostrarTablero()
 
                     # Pide al usuario 2 su movimiento
-                    self._entradaUsuario(2)
+                    self._entradaUsuario((nombre_usuario_2, 2))
 
                     # Comprobar si el usuario 2 ha ganado
                     if self._comprobarVictoria(self.sign[1]):
                         self._limpiarTerminal() # Limpiar la pantalla
                         self._mostrarCabecera() # Mostrar la cabecera
                         self._mostrarTablero() # Mostrar el tablero
-                        print(estilos.color.verde + '\nEl ganador es el usuario 2.' + estilos.color.RESET)
+                        self._texto_animado(estilos.color.verde + f'\nEl ganador es {nombre_usuario_2}.' + estilos.color.RESET)
                         break
 
                     # Comprobar si el tablero está lleno
@@ -216,27 +258,38 @@ class JuegoTresEnRaya:
                         break
 
             else:
+                nombre_usuario_1 = self._preguntar_nombre(1)
+
                 while True:
+                    # Limpiar la pantalla
+                    self._limpiarTerminal()
+
+                    # Mostrar la cabecera del juego
+                    self._mostrarCabecera()
+
                     # Muestra el tablero
                     self._mostrarTablero()
 
                     # Pide al usuario su movimiento
-                    self._entradaUsuario(1)
+                    self._entradaUsuario((nombre_usuario_1, 1))
 
                     # Comprobar si el usuario ha ganado
                     if self._comprobarVictoria(self.sign[0]):
                         self._limpiarTerminal() # Limpiar la pantalla
                         self._mostrarCabecera() # Mostrar la cabecera
                         self._mostrarTablero() # Mostrar el tablero
-                        print(estilos.color.verde + "\nEl ganador eres tú." + estilos.color.RESET)
+                        self._texto_animado(estilos.color.verde + f"\nEl ganador eres tú, felicidades {nombre_usuario_1}." + estilos.color.RESET)
                         break
 
                     # Comprobar si el tablero está lleno
                     if self._comprobarTableroLleno():
                         break
             
-                    # Vuelve a mostrar el tablero
-                    self._mostrarTablero()
+                    # Limpiar la terminal
+                    self._limpiarTerminal()
+
+                    # Imprimir cabecera del juego
+                    self._mostrarCabecera()
 
                     # Hace el movimiento del robot
                     self._escribirMovimientoMaquina()
@@ -246,15 +299,21 @@ class JuegoTresEnRaya:
                         self._limpiarTerminal() # Limpiar la pantalla
                         self._mostrarCabecera() # Mostrar la cabecera
                         self._mostrarTablero() # Mostrar el tablero
-                        print(estilos.color.rojo + '\nHas perdido. El ganador es la máquina.' + estilos.color.RESET)
+                        self._texto_animado(estilos.color.rojo + f'\nHas perdido {nombre_usuario_1}. El ganador es la máquina.' + estilos.color.RESET)
                         break
 
                     # Comprobar si el tablero está lleno
                     if self._comprobarTableroLleno():
                         break
-        
-        # Pregunta al usuario si quiere reiniciar el juego
-        resp = input(estilos.color.azul + "\n¿Quieres volver a jugar [s | n]?: " + estilos.color.RESET).lower()
+
+        try:
+            # Pregunta al usuario si quiere reiniciar el juego
+            resp = input(estilos.color.azul + "\n¿Quieres volver a jugar [s | n]?: " + estilos.color.RESET).lower()
+
+        # Capturamos una interrupción de teclado
+        except KeyboardInterrupt:
+            self._texto_animado(estilos.color.cian + "\n¡Adios!" + estilos.color.RESET)
+            exit()
 
         # Esperamos 0.5 segundos
         time.sleep(0.5)
@@ -266,12 +325,12 @@ class JuegoTresEnRaya:
 
         # En caso de que no quiera reiniciar el juego salimos
         elif resp == "n":
-            print(estilos.color.cian + "\n¡Adios!" + estilos.color.RESET)
+            self._texto_animado(estilos.color.cian + "\n¡Adios!" + estilos.color.RESET)
             exit()
 
         # Si la respuesta es inválida lanzamos un mensaje de error y salimos
         else:
-            print(estilos.color.rojo + "\nLa respuesta no es válida. Solo se puede responder 's' o 'n'." + estilos.color.RESET)
+            self._texto_animado(estilos.color.rojo + "\nLa respuesta no es válida. Solo se puede responder 's' o 'n'." + estilos.color.RESET)
 
 
 # Iniciar el juego

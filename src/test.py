@@ -18,7 +18,7 @@ class TestJuegoTresEnRaya(unittest.TestCase):
     def test_entradaUsuario(self):
         """Prueba para la funcionalidad de introducir un movimiento por el usuario"""
         with unittest.mock.patch('builtins.input', return_value='1'):
-            self.juego._entradaUsuario(1)
+            self.juego._entradaUsuario(("test", 1))
         self.assertIn(self.juego.sign[0], self.juego.board)  # Verificar que el movimiento se registre en el tablero
 
     def test_escribirMovimientoMaquina(self):
